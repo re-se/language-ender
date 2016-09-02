@@ -1,0 +1,7 @@
+'.text.end':
+  'ruby':
+    'prefix': 'ru'
+    'body': '{${1:kanji}|${2:kana}}'
+  'say':
+    'prefix': 'say'
+    'body': '${1:name}「${2:says}」'

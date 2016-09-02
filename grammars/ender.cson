@@ -1,0 +1,170 @@
+'fileTypes': [
+  'end'
+  'ender'
+]
+'scopeName': 'text.end'
+'name': 'Ender'
+'patterns': [
+  {
+    'include': '#comments'
+  }
+  {
+    'include': '#function_calls'
+  }
+  {
+    'include': '#no_arguments_function_calls'
+  }
+  {
+    'include': '#functions'
+  }
+  {
+    'include': '#says'
+  }
+  {
+    'include': '#escapes'
+  }
+]
+'repository':
+  'comments':
+    'patterns': [
+      {
+        'match': '^#.*\n'
+        'name': 'comment.line.end'
+        'comment': 'comment with #'
+      }
+    ]
+  'strings':
+    'patterns': [
+      {
+        'begin': '"'
+        'end': '"'
+        'name': 'string.quoted.double.end'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.end'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.end'
+      }
+    ]
+  'numbers':
+    'patterns': [
+      {
+        'match': '[0-9]+'
+        'name': 'constant.numeric.decimal.end'
+      }
+    ]
+  'arguments':
+    'patterns': [
+      {
+        'begin': '\\('
+        'end': '\\)'
+        'name': 'meta.arguments.end'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.arguments.begin.bracket.round.end'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.arguments.end.bracket.round.end'
+        'patterns': [
+          {'include': '#strings'}
+          {'include': '#numbers'}
+        ]
+      }
+    ]
+  'function_calls':
+    'patterns': [
+      {
+        'begin': '(\\\\[a-zA-Z][a-zA-Z0-9\\-]*)(?=\\()'
+        'end': '(?<=\\))'
+        'name': 'meta.function-call.end'
+        'beginCaptures':
+          '1':
+            'name': 'entity.name.function.end'
+        'patterns': [
+          'include': '#arguments'
+        ]
+      }
+    ]
+  'no_arguments_function_calls':
+    'patterns': [
+      {
+        'match': '(\\\\[a-zA-Z][a-zA-Z0-9\\-]*)'
+        'name': 'meta.function-call.end'
+        'captures':
+          '1':
+            'name': 'entity.name.function.end'
+      }
+    ]
+  'functions':
+    'patterns': [
+      {
+        'begin': '(func)\\s*([a-zA-Z][a-zA-Z0-9\\-]*)\s*'
+        'end': '(?<=\\})'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.function.end'
+          '2':
+            'name': 'entity.name.function.end'
+        'patterns': [
+          {'include': '#function_body'}
+          {'include': '#function_params'}
+        ]
+      }
+    ]
+  'function_params':
+    'patterns': [
+      {
+        'begin': '\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.begin.bracket.round.end'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.end.bracket.round.end'
+        'name': 'meta.parameters.end'
+        'patterns': [
+          {
+            'match': '[a-zA-Z][a-zA-Z0-9\\-]*'
+            'name': 'variable.parameter.function.end'
+          }
+        ]
+      }
+    ]
+  'function_body':
+    'patterns': [
+      {
+        'begin': '{'
+        'end': '}'
+        'patterns': [
+          'include': '$self'
+        ]
+      }
+    ]
+  'says':
+    'patterns': [
+      {
+        'begin': '(((?!「).)*)(「)'
+        'end': '」'
+        'name': 'meta.function-call.end'
+        'beginCaptures':
+          '1':
+            'name': 'constant.other.end'
+          '3':
+            'name': 'keyword.control.end'
+        'endCaptures':
+          '0':
+            'name': 'keyword.control.end'
+        'patterns': [
+          'include': '#escapes'
+        ]
+      }
+    ]
+  'escapes':
+    'patterns': [
+      {
+        'match': '\\\\([「」{}@\\n\\\\])'
+        'name': 'constant.character.escape.end'
+      }
+    ]
