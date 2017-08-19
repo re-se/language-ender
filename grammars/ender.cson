@@ -28,7 +28,7 @@
   'comments':
     'patterns': [
       {
-        'match': '^#.*\n'
+        'match': '#.*\n'
         'name': 'comment.line.end'
         'comment': 'comment with #'
       }
@@ -145,8 +145,8 @@
   'says':
     'patterns': [
       {
-        'begin': '(((?!「).)*)(「)'
-        'end': '」'
+        'begin': '^(((?!「).)*)(「)(?=(((?!(^$|」\\n))[\\s\\S])*」$))'
+        'end': '」$'
         'name': 'meta.function-call.end'
         'beginCaptures':
           '1':
