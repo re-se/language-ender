@@ -18,6 +18,9 @@
     'include': '#functions'
   }
   {
+    'include': '#not_says'
+  }
+  {
     'include': '#says'
   }
   {
@@ -99,7 +102,7 @@
   'functions':
     'patterns': [
       {
-        'begin': '(func)\\s*([a-zA-Z][a-zA-Z0-9\\-]*)\s*'
+        'begin': '(func)\\s*([a-zA-Z][a-zA-Z0-9\\-]*)\\s*'
         'end': '(?<=\\})'
         'beginCaptures':
           '1':
@@ -142,22 +145,49 @@
         ]
       }
     ]
+  'not_says':
+    'patterns': [
+      {
+        'match': '^.*」((?!」).)+$'
+      }
+    ]
   'says':
     'patterns': [
       {
-        'begin': '^(((?!「).)*)(「)(?=(((?!(^$|」\\n))[\\s\\S])*」$))'
-        'end': '」$'
+        'begin': '^(?=(((?!「).)*)「)'
+        'end': '(?<=」$)'
         'name': 'meta.function-call.end'
+        'patterns': [
+          {'include': '#says_body'}
+          {
+            'begin': '\\G'
+            'end': '(?=「)'
+            'patterns': [
+              {
+                'match': '((?!「).)+'
+                'name': 'constant.other.end'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  'says_body':
+    'patterns': [
+      {
+        'begin': '「'
+        'end': '」$'
         'beginCaptures':
-          '1':
-            'name': 'constant.other.end'
-          '3':
+          '0':
             'name': 'keyword.control.end'
         'endCaptures':
           '0':
             'name': 'keyword.control.end'
         'patterns': [
-          'include': '#escapes'
+          {'include': '#escapes'}
+          {'include': '#text'}
+          {'include': '#kakko'}
+          {'include': '#newline'}
         ]
       }
     ]
@@ -166,5 +196,26 @@
       {
         'match': '\\\\([「」{}@\\n\\\\])'
         'name': 'constant.character.escape.end'
+      }
+    ]
+  'kakko':
+    'patterns': [
+      {
+        'match': '「((?!(」|\\\\)).)*」'
+        'patterns': [
+          {'include': '#escapes'}
+        ]
+      }
+    ]
+  'text':
+    'patterns': [
+      {
+        'match': '((?![」「\\\\]).)+'
+      }
+    ]
+  'newline':
+    'patterns': [
+      {
+        'match': '\\n'
       }
     ]
