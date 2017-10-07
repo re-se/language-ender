@@ -1,6 +1,6 @@
 {
   "name": "language-ender",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "ノベルゲームエンジン Ender (https://github.com/re-se/Ender) の Atom 用テーマ",
   "engines": {
     "atom": "*",
