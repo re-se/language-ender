@@ -1,0 +1,27 @@
+{
+  "name": "language-ender",
+  "version": "0.0.0",
+  "description": "ノベルゲームエンジン Ender (https://github.com/re-se/Ender) の Atom 用テーマ",
+  "engines": {
+    "atom": "*",
+    "node": "*"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/re-se/language-ender.git"
+  },
+  "author": "sese",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/re-se/language-ender/issues"
+  },
+  "homepage": "https://github.com/re-se/language-ender#readme"
+}
